@@ -37,7 +37,7 @@
 - name: Remove all local resolvers
   apt:
     pkg: "{{ resolv_pkg_to_remove }}"
-    status: absent
+    state: absent
 
 - name: Enable unbound service
   service:

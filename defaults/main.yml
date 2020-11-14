@@ -53,3 +53,16 @@ unbound_forward_zones: []  # list of dicts
 unbound_views: []  # list of strings, as options can be multiples
 
 # vim: set ts=2 sw=2:
+
+resolv_nameservers: ['127.0.0.1']
+resolv_domain: ""
+resolv_search: []
+resolv_sortlist: []
+resolv_options: []
+resolv_pkg_to_remove:
+  - dnsmasq
+  - avahi-daemon
+resolv_pkg_to_disable:
+  - systemd-resolved
+  - dnsmasq
+  - avahi-daemon

@@ -9,7 +9,3 @@ galaxy_info:
     versions:
     - bionic
     - focal
-
-dependencies:
-  - src: https://github.com/aruhier/ansible-role-unbound.git
-    name: unbound
