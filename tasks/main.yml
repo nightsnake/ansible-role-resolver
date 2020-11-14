@@ -1,0 +1,54 @@
+---
+- name: Get current state via unbound control
+  command: unbound-control status
+  register: _unbound_status
+  changed_when: false
+  failed_when: false
+
+- include: dist_vars.yml
+
+- include: install.yml
+
+- name: Check if unbound_server.key is present
+  stat:
+    path: "{{ unbound_directory }}/unbound_server.key"
+  register: unbound_remote_keys
+- name: Setup certificates
+  command: unbound-control-setup
+  when: |
+    unbound_control_enable == "yes" and not unbound_remote_keys.stat.exists
+
+- include: root_anchor.yml
+  when: unbound_auto_trust_anchor_file|default(false)
+
+# Cannot move this part as the `verify` component of the previous task, because
+# unbound-checkconf fails if the file is outside {{ unbound_directory }}
+- name: Check unbound.conf
+  command: unbound-checkconf "{{ unbound_conf_path }}"
+  changed_when: false
+
+- name: Disable all local resolvers
+  systemd:
+    name: "{{ item }}"
+    enabled: no
+    state: stopped
+  loop: "{{ resolv_pkg_to_remove }}"
+
+- name: Remove all local resolvers
+  apt:
+    pkg: "{{ resolv_pkg_to_remove }}"
+    status: absent
+
+- name: Enable unbound service
+  service:
+    name: "{{ unbound_service_name }}"
+    state: started
+    enabled: true
+  when: unbound_enable_service
+
+- name: "Configure resolv.conf"
+  template:
+    src: "resolv.conf.j2"
+    dest: "/etc/resolv.conf"
+    mode: "0644"
+  become: True
