@@ -67,5 +67,6 @@ resolv_pkg_to_disable:
   - dnsmasq
   - avahi-daemon
 
-nm_dns_enable: no
+
+nm_dns_enable: "no"
 nm_dns_set: yes

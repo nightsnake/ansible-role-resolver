@@ -52,3 +52,10 @@
     dest: "/etc/resolv.conf"
     mode: "0644"
   become: True
+
+- name: "Disable obtaining DNS servers via DHCP"
+  template:
+    src: "dns.conf.j2"
+    dest: "/etc/NetworkManager/conf.d/dns.conf"
+    mode: "0644"
+  become: True
