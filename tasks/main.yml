@@ -9,6 +9,12 @@
 
 - include: install.yml
 
+- name: Configure unbound.conf
+  template:
+    src: unbound.conf.j2
+    dest: "{{ unbound_conf_path }}"
+  notify: restart unbound
+
 - name: Check if unbound_server.key is present
   stat:
     path: "{{ unbound_directory }}/unbound_server.key"
