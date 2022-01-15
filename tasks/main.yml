@@ -9,6 +9,12 @@
 
 - include: install.yml
 
+- name: Download root.hints file
+  get_url:
+    url: http://www.internic.net/domain/named.root
+    dest: /var/lib/unbound
+  notify: restart unbound
+
 - name: Configure unbound.conf
   template:
     src: unbound.conf.j2
@@ -19,6 +25,7 @@
   stat:
     path: "{{ unbound_directory }}/unbound_server.key"
   register: unbound_remote_keys
+  
 - name: Setup certificates
   command: unbound-control-setup
   when: |

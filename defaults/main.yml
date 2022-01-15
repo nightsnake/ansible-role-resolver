@@ -70,3 +70,4 @@ resolv_pkg_to_disable:
 
 nm_dns_enable: "no"
 nm_dns_set: yes
+unbound_root_hints: "/var/lib/unbound/named.root"
