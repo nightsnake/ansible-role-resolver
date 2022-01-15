@@ -346,7 +346,9 @@ outgoing-interface: {{ interface }}
 {% for file in unbound_trusted_keys_files %}
     trusted-keys-file: {{ file }}
 {% endfor %}
-
+{% if unbound_tls_cert_bundle is defined %}
+    tls-cert-bundle: {{ unbound_tls_cert_bundle }}
+{% endif %}
 {% if unbound_val_override_date is defined %}
     val-override-date: {{ unbound_val_override_date }}
 {% endif %}
@@ -382,6 +384,7 @@ outgoing-interface: {{ interface }}
     dns64-synthall: {{ unbound_dns64_synthall }}
 {% endif %}
 
+
 remote-control:
     control-enable: {{ unbound_control_enable }}
 {% for interface in unbound_control_interface %}
@@ -405,6 +408,7 @@ remote-control:
 {% if unbound_control_cert_file is defined %}
     control-cert-file: {{ unbound_control_cert_file }}
 {% endif %}
+
 
 {% for stub_zone in unbound_stub_zones %}
 stub-zone:

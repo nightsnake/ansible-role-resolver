@@ -39,6 +39,7 @@
     enabled: no
     state: stopped
   loop: "{{ resolv_pkg_to_remove }}"
+  ignore_errors: yes
 
 - name: Remove all local resolvers
   apt:
