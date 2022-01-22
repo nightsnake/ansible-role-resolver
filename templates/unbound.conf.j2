@@ -346,7 +346,7 @@ outgoing-interface: {{ interface }}
 {% for file in unbound_trusted_keys_files %}
     trusted-keys-file: {{ file }}
 {% endfor %}
-{% if unbound_tls_cert_bundle is defined %}
+{% if unbound_tls_cert_bundle is defined and unbound_tls_cert_bundle %}
     tls-cert-bundle: {{ unbound_tls_cert_bundle }}
 {% endif %}
 {% if unbound_val_override_date is defined %}
