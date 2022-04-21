@@ -45,7 +45,7 @@
     name: "{{ item }}"
     enabled: no
     state: stopped
-  loop: "{{ resolv_pkg_to_remove }}"
+  loop: "{{ resolv_pkg_to_disable }}"
   ignore_errors: yes
 
 - name: Remove all local resolvers
