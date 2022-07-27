@@ -46,7 +46,7 @@
     enabled: no
     state: stopped
   loop: "{{ resolv_pkg_to_disable }}"
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Remove all local resolvers
   apt:
@@ -73,3 +73,4 @@
     dest: "/etc/NetworkManager/conf.d/dns.conf"
     mode: "0644"
   become: True
+  ignore_errors: true
