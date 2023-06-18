@@ -74,8 +74,8 @@ server:
     tcp-upstream: {{ unbound_tcp_upstream }}
 {% endif %}
 
-{% if unbound_ssl_upstream is defined %}
-    ssl-upstream: {{ unbound_ssl_upstream }}
+{% if unbound_tls_upstream is defined %}
+    tls-upstream: {{ unbound_tls_upstream }}
 {% endif %}
 {% if unbound_ssl_service_key is defined %}
     ssl-service-key: {{ unbound_ssl_service_key }}
