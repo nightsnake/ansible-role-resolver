@@ -39,8 +39,8 @@
     name: "{{ item }}"
     enabled: no
     state: stopped
-  loop: "{{ resolv_pkg_to_remove }}"
-  ignore_errors: yes
+  loop: "{{ resolv_pkg_to_disable }}"
+  ignore_errors: true
 
 - name: Remove all local resolvers
   apt:
@@ -60,7 +60,7 @@
     dest: "/etc/NetworkManager/conf.d/dns.conf"
     mode: "0644"
   become: True
-
+  
 # Cannot move this part as the `verify` component of the previous task, because
 # unbound-checkconf fails if the file is outside {{ unbound_directory }}
 - name: Check unbound.conf
@@ -73,3 +73,4 @@
     state: started
     enabled: true
   when: unbound_enable_service
+
