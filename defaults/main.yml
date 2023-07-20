@@ -62,6 +62,7 @@ resolv_options: []
 resolv_pkg_to_remove:
   - dnsmasq
   - avahi-daemon
+  - openresolv
 resolv_pkg_to_disable:
   - systemd-resolved
   - dnsmasq
@@ -70,4 +71,3 @@ resolv_pkg_to_disable:
 
 nm_dns_enable: "no"
 nm_dns_set: yes
-unbound_root_hints: "/var/lib/unbound/named.root"

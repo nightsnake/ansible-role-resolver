@@ -1,0 +1,33 @@
+#{{ ansible_managed }}
+
+server:
+{% if unbound_trust_anchor_signaling is defined %}
+    trust-anchor-signaling: {{ unbound_trust_anchor_signaling }}
+{% endif %}    
+{% if unbound_auto_trust_anchor_file is defined %}
+    root-key-sentinel: {{ unbound_root_key_sentinel }}
+{% endif %}    
+{% if unbound_trust_anchor_file is defined %}
+    trust-anchor-file: {{ unbound_trust_anchor_file }}
+{% endif %}
+{% if unbound_auto_trust_anchor_file is defined %}
+    auto-trust-anchor-file: {{ unbound_auto_trust_anchor_file }}
+{% endif %}
+{% if unbound_add_holddown is defined %}
+    add-holddown: {{ unbound_add_holddown }}
+{% endif %}
+{% if unbound_del_holddown is defined %}
+    del-holddown: {{ unbound_del_holddown }}
+{% endif %}
+{% if unbound_permit_small_holddown is defined %}
+    permit-small-holddown: {{ unbound_permit_small_holddown }}
+{% endif %}
+{% if unbound_keep_missing is defined %}
+    keep-missing: {{ unbound_keep_missing }}
+{% endif %}
+{% for record in unbound_trust_anchors %}
+    trust-anchor: {{ record }}
+{% endfor %}
+{% for file in unbound_trusted_keys_files %}
+    trusted-keys-file: {{ file }}
+{% endfor %}

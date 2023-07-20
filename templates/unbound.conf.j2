@@ -4,22 +4,11 @@ server:
     verbosity: {{ unbound_verbosity }}
     username: "{{ unbound_username }}"
     directory: "{{ unbound_directory }}"
-{% if unbound_use_syslog is defined and unbound_use_syslog == "yes" %}
-    use-syslog: {{ unbound_use_syslog }}
-{% elif unbound_logfile is defined %}
-    logfile: {{ unbound_logfile }}
-{% endif %}
-{% if unbound_log_identity is defined %}
-    log-identity: {{ unbound_log_identity }}
-{% endif %}
-{% if unbound_log_time_ascii is defined %}
-    log-time-ascii: {{ unbound_log_time_ascii }}
-{% endif %}
+
+    include: /etc/unbound/unbound.conf.d/*.conf
+
 {% if unbound_chroot is defined %}
     chroot: {{ unbound_chroot }}
-{% endif %}
-{% if unbound_log_queries is defined %}
-    log-queries: {{ unbound_log_queries }}
 {% endif %}
 {% if unbound_pidfile is defined %}
     pidfile: {{ unbound_pidfile }}
@@ -48,7 +37,26 @@ server:
 {% if unbound_version is defined %}
     version: {{ unbound_version }}
 {% endif %}
-
+{% if unbound_use_syslog is defined and unbound_use_syslog == "yes" %}
+    use-syslog: {{ unbound_use_syslog }}
+{% elif unbound_logfile is defined %}
+    logfile: {{ unbound_logfile }}
+{% endif %}
+{% if unbound_log_identity is defined %}
+    log-identity: {{ unbound_log_identity }}
+{% endif %}
+{% if unbound_log_time_ascii is defined %}
+    log-time-ascii: {{ unbound_log_time_ascii }}
+{% endif %}
+{% if unbound_log_queries is defined %}
+    log-queries: {{ unbound_log_queries }}
+{% endif %}
+{% if unbound_log_servfail is defined %}
+    log-servfail: {{ unbound_log_servfail }}
+{% endif %}
+{% if unbound_log_local_actions is defined %}
+    log-local-actions: {{ unbound_log_local_actions }}
+{% endif %}
     num-threads: {{ unbound_num_threads }}
 {% if unbound_num_queries_per_thread is defined %}
     num-queries-per-thread: {{ unbound_num_queries_per_thread }}
@@ -77,16 +85,21 @@ server:
 {% if unbound_tls_upstream is defined %}
     tls-upstream: {{ unbound_tls_upstream }}
 {% endif %}
-{% if unbound_ssl_service_key is defined %}
-    ssl-service-key: {{ unbound_ssl_service_key }}
+{% if unbound_tls_service_key is defined %}
+    tls-service-key: {{ unbound_tls_service_key }}
 {% endif %}
-{% if unbound_ssl_service_pem is defined %}
-    ssl-service-pem: {{ unbound_ssl_service_pem }}
+{% if unbound_tls_service_pem is defined %}
+    tls-service-pem: {{ unbound_tls_service_pem }}
 {% endif %}
-{% if unbound_ssl_port is defined %}
-    ssl-port: {{ unbound_ssl_port }}
+{% if unbound_tls_port is defined %}
+    tls-port: {{ unbound_tls_port }}
 {% endif %}
-
+{% if unbound_tls_ciphers is defined %}
+    tls-ciphers: {{ unbound_tls_ciphers }}
+{% endif %}
+{% if unbound_tls_ciphersuites is defined %}
+    tls-ciphersuites: {{ unbound_tls_ciphersuites }}
+{% endif %}
 
 {% for interface in unbound_outgoing_interfaces %}
 outgoing-interface: {{ interface }}
@@ -117,7 +130,6 @@ outgoing-interface: {{ interface }}
 {% endif %}
 {% if unbound_max_udp_size is defined %}
     max-udp-size: {{ unbound_max_udp_size }}
-
 {% endif %}
 {% if unbound_msg_buffer_size is defined %}
     msg-buffer-size: {{ unbound_msg_buffer_size }}
@@ -148,6 +160,9 @@ outgoing-interface: {{ interface }}
 {% endif %}
 {% if unbound_minimal_responses is defined %}
     minimal-responses: {{ unbound_minimal_responses }}
+{% endif %}
+{% if unbound_deny_any is defined %}
+    mdeny-any: {{ unbound_deny_any }}
 {% endif %}
 {% if unbound_disable_dnssec_lame_check is defined %}
     disable-dnssec-lame-check: {{ unbound_disable_dnssec_lame_check }}
@@ -322,30 +337,7 @@ outgoing-interface: {{ interface }}
     local-zone-override: {{ override }}
 {% endfor %}
 
-{% if unbound_trust_anchor_file is defined %}
-    trust-anchor-file: {{ unbound_trust_anchor_file }}
-{% endif %}
-{% if unbound_auto_trust_anchor_file is defined %}
-    auto-trust-anchor-file: {{ unbound_auto_trust_anchor_file }}
-{% endif %}
-{% if unbound_add_holddown is defined %}
-    add-holddown: {{ unbound_add_holddown }}
-{% endif %}
-{% if unbound_del_holddown is defined %}
-    del-holddown: {{ unbound_del_holddown }}
-{% endif %}
-{% if unbound_permit_small_holddown is defined %}
-    permit-small-holddown: {{ unbound_permit_small_holddown }}
-{% endif %}
-{% if unbound_keep_missing is defined %}
-    keep-missing: {{ unbound_keep_missing }}
-{% endif %}
-{% for record in unbound_trust_anchors %}
-    trust-anchor: {{ record }}
-{% endfor %}
-{% for file in unbound_trusted_keys_files %}
-    trusted-keys-file: {{ file }}
-{% endfor %}
+
 {% if unbound_tls_cert_bundle is defined and unbound_tls_cert_bundle %}
     tls-cert-bundle: {{ unbound_tls_cert_bundle }}
 {% endif %}

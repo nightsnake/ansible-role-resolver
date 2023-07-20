@@ -34,12 +34,6 @@
 - include: root_anchor.yml
   when: unbound_auto_trust_anchor_file|default(false)
 
-# Cannot move this part as the `verify` component of the previous task, because
-# unbound-checkconf fails if the file is outside {{ unbound_directory }}
-- name: Check unbound.conf
-  command: unbound-checkconf "{{ unbound_conf_path }}"
-  changed_when: false
-
 - name: Disable all local resolvers
   systemd:
     name: "{{ item }}"
@@ -53,13 +47,6 @@
     pkg: "{{ resolv_pkg_to_remove }}"
     state: absent
 
-- name: Enable unbound service
-  service:
-    name: "{{ unbound_service_name }}"
-    state: started
-    enabled: true
-  when: unbound_enable_service
-
 - name: "Configure resolv.conf"
   template:
     src: "resolv.conf.j2"
@@ -67,10 +54,23 @@
     mode: "0644"
   become: True
 
-- name: "Disable obtaining DNS servers via DHCP"
+- name: "Disable obtaining DNS servers via DHCP/NM"
   template:
     src: "dns.conf.j2"
     dest: "/etc/NetworkManager/conf.d/dns.conf"
     mode: "0644"
   become: True
-  ignore_errors: true
+  
+# Cannot move this part as the `verify` component of the previous task, because
+# unbound-checkconf fails if the file is outside {{ unbound_directory }}
+- name: Check unbound.conf
+  command: unbound-checkconf "{{ unbound_conf_path }}"
+  changed_when: false
+
+- name: Enable unbound service
+  service:
+    name: "{{ unbound_service_name }}"
+    state: started
+    enabled: true
+  when: unbound_enable_service
+
