@@ -5,8 +5,8 @@
     path: "{{ unbound_auto_trust_anchor_file }}"
     state: file
     mode: "u=rw,g=r,o=r"
-    owner: root
-    group: root
+    owner: unbound
+    group: unbound
 
 - name: Update root anchor
   command: unbound-anchor -a "{{ unbound_auto_trust_anchor_file }}"
