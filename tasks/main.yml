@@ -55,11 +55,16 @@
   become: True
 
 - name: "Disable obtaining DNS servers via DHCP/NM"
+  local_action: stat path=/etc/NetworkManager
+  register: NM
+
+- name: "Disable obtaining DNS servers via DHCP/NM"
   template:
     src: "dns.conf.j2"
     dest: "/etc/NetworkManager/conf.d/dns.conf"
     mode: "0644"
   become: True
+  when: NM.stat.exist
   
 # Cannot move this part as the `verify` component of the previous task, because
 # unbound-checkconf fails if the file is outside {{ unbound_directory }}
