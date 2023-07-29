@@ -13,5 +13,12 @@
   register: unbound_anchor_rc
   changed_when: unbound_anchor_rc.rc == 1
   failed_when: unbound_anchor_rc.rc > 1
+
+- name: "Configure trust anchor"
+  template:
+    src: "root-auto-trust-anchor-file.conf.j2"
+    dest: "/etc/unbound/unbound.conf.d/root-auto-trust-anchor-file.conf"
+    mode: "0644"
+  become: True
     
 # vim: set ts=2 sw=2:
