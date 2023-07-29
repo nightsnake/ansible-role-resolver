@@ -3,9 +3,11 @@
 {% if unbound_dot_server %}
 server:
 {% for interface in unbound_interfaces %}
-    interface: {{ interface }}@unbound_dot_port
+    interface: {{ interface }}@{{ unbound_dot_port }}
 {% endfor %}
 {% if unbound_dot_udp_upstream_without_downstream is defined %} 
 udp-upstream-without-downstream: {{ unbound_dot_udp_upstream_without_downstream }}
+tls-service-key: {{ unbound_dot_tls_key }}
+tls-service-pem: {{ unbound_dot_tls_cert }}
 {% endif %}
 {% endif %}    
