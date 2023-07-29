@@ -64,8 +64,14 @@
     dest: "/etc/NetworkManager/conf.d/dns.conf"
     mode: "0644"
   become: True
-  when: NM.stat.exist
-  
+  when: NM.stat.exists
+  ignore_errors: true
+
+- name: "Disable obtaining DNS servers via DHCP/NM"  
+  ansible.builtin.file:
+    path: /etc/dhcp/dhclient-enter-hooks.d/resolvconf
+    state: absent
+
 # Cannot move this part as the `verify` component of the previous task, because
 # unbound-checkconf fails if the file is outside {{ unbound_directory }}
 - name: Check unbound.conf
