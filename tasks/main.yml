@@ -34,6 +34,9 @@
 - include: root_anchor.yml
   when: unbound_auto_trust_anchor_file|default(false)
 
+- include: dot.yml
+  when: unbound_dot_server|default(false)
+
 - name: Disable all local resolvers
   systemd:
     name: "{{ item }}"

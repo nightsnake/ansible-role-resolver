@@ -72,3 +72,10 @@ resolv_pkg_to_disable:
 
 nm_dns_enable: "no"
 nm_dns_set: yes
+
+### DoT
+unbound_dot_server: no
+unbound_dot_port: 853
+unbound_dot_tls_cert: ""
+unbound_dot_tls_key: ""
+unbound_dot_udp_upstream_without_downstream: "yes"

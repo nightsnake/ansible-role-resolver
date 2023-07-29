@@ -1,0 +1,7 @@
+- name: "Configure DoT"
+  template:
+    src: "dot.conf.j2"
+    dest: "/etc/unbound/unbound.conf.d/dot.conf"
+    mode: "0644"
+  become: True
+

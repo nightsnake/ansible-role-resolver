@@ -1,0 +1,11 @@
+#{{ ansible_managed }}
+
+{% if unbound_dot_server %}
+server:
+{% for interface in unbound_interfaces %}
+    interface: {{ interface }}@unbound_dot_port
+{% endfor %}
+{% if unbound_dot_udp_upstream_without_downstream is defined %} 
+udp-upstream-without-downstream: {{ unbound_dot_udp_upstream_without_downstream }}
+{% endif %}
+{% endif %}    
