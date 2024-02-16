@@ -6,4 +6,8 @@
     name: "{{ unbound_service_name }}"
     state: "{{ unbound_reloaded_state }}"
 
+- name: apparmor
+  become: true
+  command: apparmor_parser -r /etc/apparmor.d/usr.sbin.unbound
+
 # vim: set ts=2 sw=2:

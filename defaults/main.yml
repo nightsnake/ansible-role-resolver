@@ -3,7 +3,7 @@
 unbound_conf_path: "/etc/unbound/unbound.conf"
 unbound_enable_service: true
 unbound_service_name: "unbound"
-
+unbound_apparmor_path: /etc/apparmor.d/local/usr.sbin.unbound
 ### Server ###
 
 unbound_verbosity: 1

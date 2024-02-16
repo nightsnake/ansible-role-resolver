@@ -1,0 +1,18 @@
+#
+
+- name: Touch the log file
+  become: True
+  file:
+    path: "{{ unbound_logfile }}"
+    state: file
+    mode: "u=rw,g=r,o=r"
+    owner: unbound
+    group: unbound
+
+- name: Add the apparmor permissions
+  become: True
+  ansible.builtin.lineinfile:
+    path: /etc/apparmor.d/local/usr.sbin.unbound
+    line: "/var/log/unbound/unbound.log rw,"
+    create: yes
+  notify: apparmor

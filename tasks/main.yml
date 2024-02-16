@@ -15,6 +15,10 @@
     dest: /var/lib/unbound
   notify: restart unbound
 
+- include_tasks: log.yml
+  when: |
+    unbound_use_syslog is defined and unbound_use_syslog == "yes" 
+    
 - name: Configure unbound.conf
   template:
     src: unbound.conf.j2
