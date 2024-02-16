@@ -7,7 +7,7 @@ server:
 {% endfor %}
 {% if unbound_dot_udp_upstream_without_downstream is defined %} 
 udp-upstream-without-downstream: {{ unbound_dot_udp_upstream_without_downstream }}
+{% endif %}
 tls-service-key: {{ unbound_dot_tls_key }}
 tls-service-pem: {{ unbound_dot_tls_cert }}
-{% endif %}
 {% endif %}    

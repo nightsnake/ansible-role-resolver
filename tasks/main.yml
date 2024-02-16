@@ -5,9 +5,9 @@
   changed_when: false
   failed_when: false
 
-- include: dist_vars.yml
+- include_tasks: dist_vars.yml
 
-- include: install.yml
+- include_tasks: install.yml
 
 - name: Download root.hints file
   get_url:
@@ -31,10 +31,10 @@
   when: |
     unbound_control_enable == "yes" and not unbound_remote_keys.stat.exists
 
-- include: root_anchor.yml
+- include_tasks: root_anchor.yml
   when: unbound_auto_trust_anchor_file|default(false)
 
-- include: dot.yml
+- include_tasks: dot.yml
   when: unbound_dot_server|default(false)
 
 - name: Disable all local resolvers

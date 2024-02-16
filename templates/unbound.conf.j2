@@ -51,6 +51,9 @@ server:
 {% if unbound_log_queries is defined %}
     log-queries: {{ unbound_log_queries }}
 {% endif %}
+{% if unbound_log_replies is defined %}
+    log-replies: {{ unbound_log_replies }}
+{% endif %}
 {% if unbound_log_servfail is defined %}
     log-servfail: {{ unbound_log_servfail }}
 {% endif %}
@@ -166,6 +169,9 @@ outgoing-interface: {{ interface }}
 {% endif %}
 {% if unbound_disable_dnssec_lame_check is defined %}
     disable-dnssec-lame-check: {{ unbound_disable_dnssec_lame_check }}
+{% endif %}
+{% if unbound_aggressive_nsec is defined %}
+    aggressive-nsec: {{ unbound_aggressive_nsec }}
 {% endif %}
 
 {% if unbound_cache_max_ttl is defined %}
