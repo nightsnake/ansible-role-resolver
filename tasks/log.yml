@@ -18,3 +18,4 @@
     line: "/var/log/unbound.log rw,"
     create: yes
   notify: restart apparmor
+  when: ansible_virtualization_type != "lxc"  
