@@ -6,7 +6,7 @@
     name: "{{ unbound_service_name }}"
     state: "{{ unbound_reloaded_state }}"
 
-- name: apparmor
+- name: restart apparmor
   become: true
   command: apparmor_parser -r /etc/apparmor.d/usr.sbin.unbound
   when: ansible_virtualization_type != "lxc"

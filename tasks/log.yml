@@ -17,4 +17,4 @@
     path: /etc/apparmor.d/local/usr.sbin.unbound
     line: "/var/log/unbound.log rw,"
     create: yes
-  notify: apparmor
+  notify: restart apparmor
