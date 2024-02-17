@@ -9,5 +9,5 @@
 - name: apparmor
   become: true
   command: apparmor_parser -r /etc/apparmor.d/usr.sbin.unbound
-
+  when: ansible_virtualization_type != "lxc"
 # vim: set ts=2 sw=2:

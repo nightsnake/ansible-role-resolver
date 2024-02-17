@@ -17,8 +17,8 @@
 
 - include_tasks: log.yml
   when: |
-    unbound_use_syslog is defined and unbound_use_syslog == "yes" 
-    
+    unbound_logfile is defined
+
 - name: Configure unbound.conf
   template:
     src: unbound.conf.j2

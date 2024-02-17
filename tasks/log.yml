@@ -4,15 +4,17 @@
   become: True
   file:
     path: "{{ unbound_logfile }}"
-    state: file
+    state: touch
     mode: "u=rw,g=r,o=r"
     owner: unbound
     group: unbound
+    modification_time: preserve
+    access_time: preserve
 
 - name: Add the apparmor permissions
   become: True
   ansible.builtin.lineinfile:
     path: /etc/apparmor.d/local/usr.sbin.unbound
-    line: "/var/log/unbound/unbound.log rw,"
+    line: "/var/log/unbound.log rw,"
     create: yes
   notify: apparmor
