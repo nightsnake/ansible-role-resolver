@@ -5,3 +5,22 @@
     mode: "0644"
   become: True
 
+- name: Add the apparmor permissions
+  become: True
+  ansible.builtin.lineinfile:
+    path: /etc/apparmor.d/local/usr.sbin.unbound
+    line: "{{ unbound_dot_tls_key }} r,"
+    create: yes
+  
+  notify: restart apparmor
+  when: ansible_virtualization_type != "lxc"  
+
+- name: Add the apparmor permissions
+  become: True
+  ansible.builtin.lineinfile:
+    path: /etc/apparmor.d/local/usr.sbin.unbound
+    line: "{{ unbound_dot_tls_cert }} r,"
+    create: yes
+  
+  notify: restart apparmor
+  when: ansible_virtualization_type != "lxc"    
