@@ -1,0 +1,11 @@
+- name: "Add ABI AppArmor"
+  ansible.builtin.lineinfile:
+    path: /etc/apparmor.d/usr.sbin.unbound
+    regexp: '^abi <abi/4\.0>,$'
+    line: 'abi <abi/4.0>,'
+    insertafter: '^#include <tunables/global>$'
+    validate: 'apparmor_parser -d %s'
+  when: ansible_os_family == 'Debian'
+
+- name: "Apply AppArmor config"
+  ansible.builtin.command: apparmor_parser -r /etc/apparmor.d/usr.sbin.unbound
